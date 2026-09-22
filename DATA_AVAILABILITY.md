@@ -1,16 +1,9 @@
 # Data availability
 
-This repository contains the complete RP-LC positive-ionization (`RP_POS`)
-application of the Python workflow, including the MZmine-exported feature
-table, sample metadata, exclusion database, intermediate processed tables,
-statistical result tables, and generated figures.
+This repository provides the Python workflow used in the associated study, illustrated with the `RP_POS` dataset as a representative example.
 
-The repository starts from the feature table exported by MZmine. Vendor
-LC-HRMS files and converted mzXML files are not included.
+For this example, the repository includes the MZmine-exported feature table, sample metadata, exclusion database, intermediate processed tables, statistical result tables, and generated figures. Starting from the MZmine output, the notebooks illustrate how the workflow can be applied to process LC-HRMS metabolomics data and generate the reported downstream analyses.
 
-Only the `RP_POS` dataset is publicly distributed in this repository. Data from
-the other LC-HRMS acquisition modes used in the associated study are available
-from the corresponding author upon reasonable request.
+The original vendor LC-HRMS files and converted mzXML files are not included in this repository.
 
-The exact version associated with the manuscript should be cited using the
-versioned GitHub release rather than the continuously updated default branch.
+Only the `RP_POS` dataset is publicly distributed here as an example application of the workflow. Data from the other LC-HRMS acquisition modes used in the study are available from the corresponding author upon request.
