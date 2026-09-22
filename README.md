@@ -105,7 +105,7 @@ To recreate the original Conda environment:
 
 ```bash
 conda env create -f environment.yml
-conda activate heparg-psychostimulant-metabolomics
+conda activate metabolomics_pipeline_HepaRG_psychostimulants
 jupyter lab
 ```
 
