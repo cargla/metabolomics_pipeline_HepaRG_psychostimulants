@@ -1,25 +1,21 @@
-# HepaRG psychostimulant endometabolomics workflow — RP_POS
+# HepaRG psychostimulant endogenous metabolomics workflow
 
-[![Validate repository](https://github.com/cargla/heparg-psychostimulant-metabolomics/actions/workflows/validate.yml/badge.svg)](https://github.com/cargla/heparg-psychostimulant-metabolomics/actions/workflows/validate.yml)
+[![Validate repository](https://github.com/cargla/metabolomics_pipeline_HepaRG_psychostimulants/actions/workflows/validate.yml/badge.svg)](https://github.com/cargla/metabolomics_pipeline_HepaRG_psychostimulants/actions/workflows/validate.yml)
 
-This repository contains the Python workflow used to preprocess and analyse the
-intracellular untargeted LC-HRMS dataset acquired in reversed-phase positive
-ionization mode (`RP_POS`) from differentiated HepaRG cells exposed to four
-psychostimulants: methamphetamine, MDMA, 3-MMC, and α-PHP.
+This repository provides the Python workflow used to investigate whether differentiated HepaRG cells exposed to psychostimulants share a common endogenous metabolic response.
 
-The repository provides the two analysis notebooks together with the RP_POS
-input files, intermediate datasets, statistical result tables, and figures.
-It is intended to make the complete RP_POS application understandable and
-reproducible from the MZmine feature-table export onward.
+The workflow was developed for intracellular untargeted LC-HRMS metabolomics data acquired from HepaRG cells exposed to four psychostimulants: methamphetamine (METH), MDMA, 3-MMC, and α-PHP. It combines feature preprocessing, quality-control correction, feature filtering, and complementary statistical analyses to identify endogenous metabolic features associated with the global psychostimulant response.
+
+The workflow is illustrated here using the reversed-phase positive-ionization dataset (`RP_POS`) from the associated study. The repository includes the analysis notebooks, the `RP_POS` input files, intermediate processed datasets, statistical result tables, and generated figures. It allows users to follow the analysis from the MZmine feature-table export to the final statistical outputs.
 
 ## Scope
 
-Only the `RP_POS` dataset is included in this repository. Data from the other
-LC-HRMS acquisition modes used in the associated study are available from the
-corresponding author upon reasonable request.
+Only the `RP_POS` dataset is included in this repository as a representative worked example of the workflow.
 
-The file referred to here as “raw data” is the feature table exported from
-MZmine. Vendor LC-HRMS files and converted mzXML files are not included.
+Data from the other LC-HRMS acquisition modes used in the associated study are available from the corresponding author upon request.
+
+The starting file is the feature table exported from MZmine. Original vendor LC-HRMS files and converted mzXML files are not included.
+
 
 ## Repository structure
 
@@ -38,31 +34,22 @@ MZmine. Vendor LC-HRMS files and converted mzXML files are not included.
     └── tables/
 ```
 
-### Main notebooks
-
-`notebooks/01_preprocessing_rp_pos.ipynb` performs all preprocessing steps and creates the
+### Notebooks
+The workflow is organised into two notebooks that should be run in order.
+1. `notebooks/01_preprocessing_rp_pos.ipynb` performs all preprocessing steps and creates the
 numbered files stored in `data/processed/`.
 
-`notebooks/02_statistical_analysis_rp_pos.ipynb` uses the final cleaned dataset produced by the first
-notebook and creates the statistical tables and figures stored in `outputs/`.
-
-The notebooks must therefore be run in this order:
-
-1. `notebooks/01_preprocessing_rp_pos.ipynb`
-2. `notebooks/02_statistical_analysis_rp_pos.ipynb`
+2. `notebooks/02_statistical_analysis_rp_pos.ipynb` uses the final cleaned dataset to perform the statistical analyses and generate the result tables stored in `outputs/`.
 
 ## Input files
 
 | File | Purpose |
 | --- | --- |
 | `data/raw/CELL_export_mzmine.csv` | RP_POS feature table exported from MZmine; starting point of the Python workflow |
-| `data/metadata/CELL_injection_order.xlsx` | Sample identifiers, injection order, analytical batch, sample type, experimental condition, exposure time, dilution, and replicate |
-| `data/databases/DTB_contaminants_exogenous_features.xlsx` | Internal list used to exclude contaminant and exogenous features |
+| `data/metadata/CELL_injection_order.xlsx` | Sample metadata, injection order, analytical batch, sample type, experimental condition, exposure time, dilution, and replicate |
+| `data/databases/DTB_contaminants_exogenous_features.xlsx` | Internal exclusion list used to exclude contaminant and exogenous features |
 
-The directory structure and filenames should be kept unchanged because the
-notebooks use these relative paths directly.
-
-## Notebook 1 — data preprocessing
+## Notebook 1 — Data preprocessing
 
 `notebooks/01_preprocessing_rp_pos.ipynb` performs the following operations:
 
@@ -78,24 +65,19 @@ notebooks use these relative paths directly.
 | 8 | Removal of features with a zero median across cellular samples | `08_CELL_final_cleaned_dataset.xlsx` |
 | 9 | PCA-based visualization of pooled-QC samples throughout preprocessing | `09_qc_pca_preprocessing_steps.xlsx` and associated PNG figure |
 
-The supplied RP_POS workflow starts from 4,065 MZmine features and produces a
-final cleaned matrix containing 212 samples and 1,313 features.
+In this RP_POS example, the workflow starts from 4,065 MZmine features and produces a final cleaned matrix containing 212 samples and 1,313 features.
 
-## Notebook 2 — statistical analysis
+## Notebook 2 — Statistical analysis
 
 `notebooks/02_statistical_analysis_rp_pos.ipynb` performs:
 
 - assessment of the solvent effect;
 - blocked univariate analysis of the global psychostimulant response;
 - ASCA+ modelling and restricted permutation testing;
-- leave-one-experiment-out assessment of ASCA+ contributor stability;
+- leave-one-experiment-out (LOEO) assessment of ASCA+ contributor stability;
 - PLS-DA modelling, validation, permutation testing, and VIP stability;
 - integration of candidates selected by the complementary methods;
 - evaluation of cross-drug consistency at 1 and 24 hours.
-
-The corresponding Excel workbooks are stored below
-`outputs/tables/statistical_analysis/`. Generated figures are stored below
-`outputs/figures/`.
 
 ## Python environment
 
@@ -127,12 +109,11 @@ conda activate heparg-psychostimulant-metabolomics
 jupyter lab
 ```
 
-Alternatively, the dependencies can be installed in an existing Python 3.13
-environment with `python -m pip install -r requirements.txt`.
+Alternatively, the dependencies can be installed in an existing Python 3.13 environment:
+```bash
+python -m pip install -r requirements.txt
+```
 
-The notebooks should be opened from the repository root. Running them from
-another working directory may prevent the relative paths from resolving
-correctly.
 
 ## Included results
 
@@ -154,13 +135,10 @@ python scripts/validate_repository.py
 ## Data availability
 
 The public-data boundary is described in [`DATA_AVAILABILITY.md`](DATA_AVAILABILITY.md).
-In summary, the complete RP_POS application from the MZmine feature table onward
-is included; the other acquisition modes are available upon reasonable request.
 
 ## Citation
 
 GitHub displays the recommended software citation from [`CITATION.cff`](CITATION.cff).
-The associated article citation can be added to this file after publication.
 
 ## Licence
 
