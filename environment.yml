@@ -1,4 +1,4 @@
-name: heparg-psychostimulant-metabolomics
+name: metabolomics_pipeline_HepaRG_psychostimulants
 channels:
   - conda-forge
 dependencies:
